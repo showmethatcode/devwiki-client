@@ -25,8 +25,6 @@ const titleStyle = css`
   color: #292929;
 `
 
-const newTermButtonWrapperStyle = css``
-
 const newTermButtonStyle = css`
   font-family: Pretendard;
   font-style: normal;
@@ -51,7 +49,7 @@ const Header: FC = () => {
         <Toolbar css={toolbarStyle} disableGutters={true}>
           <Box css={titleStyle}>🤞개발용어사전</Box>
           <Link style={{ textDecoration: 'none' }} href="/">
-            <ButtonBase css={newTermButtonWrapperStyle}>
+            <ButtonBase>
               <p css={newTermButtonStyle}>새로운 용어 추가하기</p>
               <Image src={arrowImgSrc} />
             </ButtonBase>
