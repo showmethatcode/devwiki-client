@@ -2,4 +2,4 @@
 #!/bin/sh
 
 mkdir output
-cp -r . ./output/
+cp -a -r . ./output/
