@@ -2,4 +2,4 @@
 #!/bin/sh
 
 mkdir output
-cp -a -r . ./output/
+rsync -a . ./output/
