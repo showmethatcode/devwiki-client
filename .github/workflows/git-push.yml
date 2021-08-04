@@ -1,0 +1,23 @@
+name: git push into another repository to deploy to vercel
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: push
+        run: |
+          git remote add origin https://github.com/showmethatcode-official/devwiki-client.git
+          git add .
+          git commit -m "Merge"
+          git push -u origin main
