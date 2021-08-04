@@ -1,5 +1,7 @@
 
 #!/bin/sh
 
+cd ../
 mkdir output
-cp -r ../devwiki-client/ ./output/
+ls -a
+cp -r ./devwiki-client/ ./output/
