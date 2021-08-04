@@ -1,4 +1,3 @@
 
 #!/bin/sh
-
-cp -r . ./output/
+find . -name '*' -exec cp {} /output \;
