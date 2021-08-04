@@ -17,6 +17,7 @@ jobs:
 
       - name: push
         run: |
+          git remote rm origin
           git remote add origin https://github.com/showmethatcode-official/devwiki-client.git
           git add .
           git commit -m "Merge"
