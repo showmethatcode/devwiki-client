@@ -21,7 +21,7 @@ jobs:
           git config --global user.email ${{ secrets.SMTC_ACCOUNT_EMAIL }}
           git config --global user.name ${{ secrets.SMTC_ACCOUNT_USERNAME }}
           git remote rm origin
-          git remote add origin https://github.com/showmethatcode-official/devwiki-client.git
+          git remote add origin https://${{ secrets.SMTC_ACCOUNT_USERNAME }}:${{ secrets.SMTC_ACCOUNT_PASSWORD }}@github.com/showmethatcode-official/devwiki-client.git
           git remote set-url origin https://${{ secrets.SMTC_ACCOUNT_USERNAME }}:${{ secrets.SMTC_ACCOUNT_PASSWORD }}@github.com/showmethatcode-official/devwiki-client.git
           git branch -M main
           git push -u origin main
