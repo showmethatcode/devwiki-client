@@ -6,22 +6,27 @@ on:
   pull_request:
     branches: [ main ]
 
-  workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    container: pandoc/latex
     steps:
       - uses: actions/checkout@v2
-
-      - name: push
-        run: |
-          git init
-          git config --global user.email "showmethatcode@gmail.com"
-          git config --global user.name "showmethatcode-official"
-          git remote rm origin
-          git remote add origin https://${{ secrets.SMTC_ACCOUNT_USERNAME }}:${{ secrets.SMTC_ACCOUNT_PASSWORD }}@github.com/showmethatcode-official/devwiki-client.git
-          git remote set-url origin https://${{ secrets.SMTC_ACCOUNT_USERNAME }}:${{ secrets.SMTC_ACCOUNT_PASSWORD }}@github.com/showmethatcode-official/devwiki-client.git
-          git branch -M main
-          git push -u origin main
+      - name: Install mustache (to update the date)
+        run:  apk add ruby && gem install mustache
+      - name: creates output
+        run:  sh ./build.sh
+      - name: Pushes to another repository
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: 'src'
+          destination-github-username: 'showmethatcode-official'
+          destination-repository-name: 'devwiki-client'
+          user-email: ${{ secrets.SMTC_ACCOUNT_EMAIL }}
+          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
+          target-branch: main
+      - name: Test get variable exported by push-to-another-repository
+        run: echo $DESTINATION_CLONED_DIRECTORY
