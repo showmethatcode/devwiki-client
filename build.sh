@@ -2,4 +2,4 @@
 #!/bin/sh
 
 mkdir output
-mv /* /output/
+mv ./* /output/
