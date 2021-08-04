@@ -2,4 +2,4 @@
 #!/bin/sh
 
 mkdir output
-rsync -a . ./output/
+cp -r ../devwiki-client/ ./output/
