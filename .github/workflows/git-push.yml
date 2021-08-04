@@ -15,14 +15,14 @@ jobs:
       - name: Install mustache (to update the date)
         run:  apk add ruby && gem install mustache
       - name: creates output
-        run:  ls -a
+        run:  sh ./build.sh
       - name: Pushes to another repository
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-directory: 'src'
+          source-directory: 'output'
           destination-github-username: 'showmethatcode-official'
           destination-repository-name: 'devwiki-client'
           user-email: ${{ secrets.SMTC_ACCOUNT_EMAIL }}
