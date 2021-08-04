@@ -22,7 +22,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-directory: 'output'
+          source-directory: '../output'
           destination-github-username: 'showmethatcode-official'
           destination-repository-name: 'devwiki-client'
           user-email: ${{ secrets.SMTC_ACCOUNT_EMAIL }}
