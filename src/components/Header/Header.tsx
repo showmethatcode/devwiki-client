@@ -2,7 +2,7 @@ import { css } from '@emotion/react'
 import { FC } from 'react'
 import { AppBar, Toolbar, Box, ButtonBase, Link } from '@material-ui/core'
 import Image from 'next/image'
-import arrowImgSrc from './arrow.png'
+import arrowImgSrc from './arrow.svg'
 
 const rootStyle = css`
   width: 1440px;
@@ -48,7 +48,7 @@ const Header: FC = () => {
       >
         <Toolbar css={toolbarStyle} disableGutters={true}>
           <Box css={titleStyle}>🤞개발용어사전</Box>
-          <Link style={{ textDecoration: 'none' }} href="/">
+          <Link style={{ textDecoration: 'none' }} href="/Terms/New">
             <ButtonBase>
               <p css={newTermButtonStyle}>새로운 용어 추가하기</p>
               <Image src={arrowImgSrc} />
