@@ -1,10 +1,11 @@
 import React, { FC } from 'react'
-import TermRelated from 'components/TermRelated'
+import TermScreen from 'screen/TermScreen'
+import InputTitle from 'components/Terms/InputTitle'
 
 const New: FC = () => {
   return (
     <div>
-      <TermRelated />
+      <TermScreen />
     </div>
   )
 }
