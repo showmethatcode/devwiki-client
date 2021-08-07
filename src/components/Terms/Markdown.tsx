@@ -19,7 +19,7 @@ const EditorWithForwardedRef = React.forwardRef<
 ))
 
 interface Props extends EditorProps {
-  onChange(value: string): void
+  onChange(value: string | boolean): void
   valueType?: 'markdown' | 'html'
 }
 
@@ -41,6 +41,7 @@ const Markdown: FC<Props> = (props, value) => {
     } else {
       setContentNotFoundError(false)
       console.log(contentNotFoundError)
+      props.onChange(contentNotFoundError)
     }
 
     const instance = editorRef.current.getInstance()
@@ -55,7 +56,7 @@ const Markdown: FC<Props> = (props, value) => {
     <div>
       <EditorWithForwardedRef
         {...props}
-        initialValue={initialValue || 'hello react editor world!'}
+        initialValue={initialValue}
         previewStyle={previewStyle || 'vertical'}
         height={height || '550px'}
         initialEditType={initialEditType || 'markdown'}
