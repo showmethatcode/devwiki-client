@@ -1,7 +1,9 @@
 import React, { useState, useCallback } from 'react'
+import useSWR from 'swr'
 import Markdown from './Markdown'
 import '@toast-ui/editor/dist/toastui-editor.css'
-
+import axios from 'axios'
+import fetcher from 'utils/fetcher'
 import {
   relatedTermsStyle,
   buttonInRelatedTermsStyle,
@@ -14,6 +16,7 @@ import {
 } from './styles'
 
 const TermRelated = () => {
+  const { data } = useSWR('RESTAPI', fetcher)
   interface ITerms {
     id: number
     text: string
@@ -27,6 +30,7 @@ const TermRelated = () => {
   const [relatedTermsNotFoundError, setRelatedTermsNotFoundError] = useState(
     true,
   )
+  const [makeTermsError, setMakeTermsError] = useState('')
   const [titleInput, setTitleInput] = useState('')
   const [titleInputNotFoundError, setTitleInputNotFoundError] = useState(true)
 
@@ -98,13 +102,47 @@ const TermRelated = () => {
     </li>
   ))
 
-  const onSubmit = useCallback((e: any) => {
-    e.preventDefault()
+  const onSubmit = useCallback(
+    (e: any, props) => {
+      e.preventDefault()
+      if (!contentNotFoundError && !contentNotFoundError) {
+        setMakeTermsError('')
+        setMakeTermsProcess(false)
+        axios
+          .post('/RESTAPI', {
+            titleInput,
+            // props.initialValue,
+            relatedTerms,
+          })
+          .then((response) => {
+            // 성공
+            console.log(response)
+            setMakeTermsProcess(true)
+          })
+          .catch((error) => {
+            console.log(error.response)
+            setMakeTermsError(error.response.data)
+          })
+      }
+    },
+    [
+      titleInput,
+      {
+        /* props.initialValue*/
+      },
+      relatedTerms,
+    ],
+  )
 
-    // if (!contentNotFoundError &&) {
-    //   setMakeTermsProcess(true)
-    // }
-  }, [])
+  if (data) {
+    return {
+      redirect: {
+        destination: '/terms',
+        permanent: false,
+      },
+    }
+  }
+
   return (
     <>
       <div id="container">
@@ -116,7 +154,13 @@ const TermRelated = () => {
           type="text"
           id="title_input"
         />
-        <Markdown onChange={(value: string) => console.log(value)} />
+        <Markdown
+          onChange={() => setContentNotFoundError(false)}
+          // onChange={(contentNotFoundError) =>
+          //   setContentNotFoundError(...contentNotFoundError)
+          // }
+        />
+        {/* (value: string) => console.log(value) */}
         <h2>관련 용어</h2>
         <input
           id="text_input"
@@ -131,7 +175,7 @@ const TermRelated = () => {
             {relatedTermsList}
           </ul>
         </div>
-        {!relatedTermsNotFoundError && !contentNotFoundError ? (
+        {!titleInputNotFoundError && !contentNotFoundError ? (
           <input
             css={submitButtonStyle}
             id="submit"
