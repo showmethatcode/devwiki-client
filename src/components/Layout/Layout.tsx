@@ -1,5 +1,10 @@
 import { FC } from 'react'
 import Header from 'components/Header'
+import { css } from '@emotion/react'
+
+const containerStyle = css`
+  margin: 0 20% 0 20%;
+`
 
 const Layout: FC = ({ children }) => {
   return (
@@ -10,7 +15,7 @@ const Layout: FC = ({ children }) => {
         }
       `}</style>
       <Header />
-      <main>{children}</main>
+      <main css={containerStyle}>{children}</main>
     </>
   )
 }
