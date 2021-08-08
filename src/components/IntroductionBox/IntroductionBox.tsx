@@ -28,6 +28,10 @@ const articleStyle = css`
     font-size: 18px;
     line-height: 27px;
   }
+
+  a {
+    color: #3d73ff;
+  }
 `
 
 const IntroductionBox: FC = () => {

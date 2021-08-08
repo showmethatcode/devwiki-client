@@ -20,8 +20,8 @@ const TermList: FC<TermListProps> = (props) => {
   return (
     <div {...props}>
       <h2>{heading}</h2>
-      {terms.map((term) => (
-        <li css={listItemStyle}>
+      {terms.map((term, idx) => (
+        <li css={listItemStyle} key={idx}>
           <a href={`/terms/${term.id}`}>{term.title}</a>
         </li>
       ))}

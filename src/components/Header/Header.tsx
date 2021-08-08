@@ -1,11 +1,9 @@
 import { css } from '@emotion/react'
 import { FC } from 'react'
-import { AppBar, Toolbar, Box, ButtonBase, Link } from '@material-ui/core'
-import Image from 'next/image'
-import arrowImgSrc from './arrow.png'
+import Link from 'next/link'
+import ArrowIcon from './ArrowIcon'
 
 const rootStyle = css`
-  width: 1440px;
   height: 66px;
   border: 1px solid #f4f4f4;
 `
@@ -14,48 +12,50 @@ const toolbarStyle = css`
   padding: 0px;
   display: flex;
   justify-content: space-around;
+  margin: 20px 0 20px 0;
 `
 
-const titleStyle = css`
+const titleWrapperStyle = css`
   font-family: Pretendard;
   font-style: normal;
   font-weight: 800;
   font-size: 20px;
   line-height: 24px;
   color: #292929;
+  cursor: pointer;
 `
 
 const newTermButtonStyle = css`
   font-family: Pretendard;
-  font-style: normal;
   font-weight: 600;
   font-size: 16px;
-  line-height: 19px;
-  text-align: right;
   color: #474747;
   margin-right: 5px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+`
+
+const newTermButtonWrapperStyle = css`
+  cursor: pointer;
 `
 
 const Header: FC = () => {
   return (
     <>
-      <AppBar
-        css={rootStyle}
-        position="static"
-        component="header"
-        color="transparent"
-        elevation={0}
-      >
-        <Toolbar css={toolbarStyle} disableGutters={true}>
-          <Box css={titleStyle}>🤞개발용어사전</Box>
-          <Link style={{ textDecoration: 'none' }} href="/">
-            <ButtonBase>
-              <p css={newTermButtonStyle}>새로운 용어 추가하기</p>
-              <Image src={arrowImgSrc} />
-            </ButtonBase>
+      <header css={rootStyle}>
+        <nav css={toolbarStyle}>
+          <Link href="/">
+            <div css={titleWrapperStyle}>🤞개발용어사전</div>
           </Link>
-        </Toolbar>
-      </AppBar>
+          <Link href="/terms/new">
+            <div css={newTermButtonWrapperStyle}>
+              <button css={newTermButtonStyle}>새로운 용어 추가하기</button>
+              <ArrowIcon />
+            </div>
+          </Link>
+        </nav>
+      </header>
     </>
   )
 }
