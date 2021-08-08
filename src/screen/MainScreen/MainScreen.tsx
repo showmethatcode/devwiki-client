@@ -1,6 +1,7 @@
-import IntroductionBox from 'components/IntroductionBox'
+import EmojiContentBox from 'components/EmojiContentBox'
 import TermList from 'components/TermList'
 import { css } from '@emotion/react'
+import { GITHUB_ORGANIZATION_URL } from 'constants/common'
 
 export type Term = { id: number; title: string }
 
@@ -44,7 +45,17 @@ const MainScreen = () => {
   return (
     <>
       <div css={rootStyle}>
-        <IntroductionBox />
+        <EmojiContentBox emoji="dog">
+          <p>
+            개발용어사전은 누구나 용어를 추가하고 수정할 수 있는 대중 참여형
+            사전이에요.
+          </p>
+          <p>
+            심지어 개발에도 함께 참여할 수 있는{' '}
+            <a href={GITHUB_ORGANIZATION_URL}>오픈소스 프로젝트</a>
+            에요!
+          </p>
+        </EmojiContentBox>
         <div css={termListWrapperStyle}>
           <TermList
             css={latestTermsWrapperStyle}
