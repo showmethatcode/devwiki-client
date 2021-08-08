@@ -57,14 +57,12 @@ interface EmojiContentBoxProps {
 
 const EmojiContentBox: FC<EmojiContentBoxProps> = ({ emoji, children }) => {
   return (
-    <>
-      <section css={rootStyle}>
-        <header>
-          <p css={headerContentStyle}>{EmojiTypes[emoji]}</p>
-        </header>
-        <article css={articleStyle}>{children}</article>
-      </section>
-    </>
+    <section css={rootStyle}>
+      <header>
+        <p css={headerContentStyle}>{EmojiTypes[emoji]}</p>
+      </header>
+      <article css={articleStyle}>{children}</article>
+    </section>
   )
 }
 
