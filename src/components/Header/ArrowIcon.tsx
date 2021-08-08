@@ -1,6 +1,4 @@
-import { FC } from 'react'
-
-const ArrowIcon: FC = () => {
+const ArrowIcon = () => {
   return (
     <svg
       width="8"

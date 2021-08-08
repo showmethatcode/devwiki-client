@@ -1,5 +1,4 @@
 import { css } from '@emotion/react'
-import { FC } from 'react'
 import Link from 'next/link'
 import ArrowIcon from './ArrowIcon'
 
@@ -16,17 +15,16 @@ const toolbarStyle = css`
 `
 
 const titleWrapperStyle = css`
-  font-family: Pretendard;
   font-style: normal;
   font-weight: 800;
   font-size: 20px;
   line-height: 24px;
   color: #292929;
   cursor: pointer;
+  letter-spacing: -0.03em;
 `
 
 const newTermButtonStyle = css`
-  font-family: Pretendard;
   font-weight: 600;
   font-size: 16px;
   color: #474747;
@@ -40,7 +38,7 @@ const newTermButtonWrapperStyle = css`
   cursor: pointer;
 `
 
-const Header: FC = () => {
+const Header = () => {
   return (
     <>
       <header css={rootStyle}>

@@ -1,4 +1,3 @@
-import React, { FC } from 'react'
 import { css } from '@emotion/react'
 import { GITHUB_ORGANIZATION_URL } from 'constants/common'
 
@@ -11,7 +10,6 @@ const rootStyle = css`
 `
 
 const headerContentStyle = css`
-  font-family: Pretendard;
   font-style: normal;
   font-weight: normal;
   font-size: 28px;
@@ -22,7 +20,6 @@ const headerContentStyle = css`
 const articleStyle = css`
   p {
     margin: auto;
-    font-family: Pretendard;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
@@ -34,7 +31,7 @@ const articleStyle = css`
   }
 `
 
-const IntroductionBox: FC = () => {
+const IntroductionBox = () => {
   return (
     <>
       <section css={rootStyle}>
