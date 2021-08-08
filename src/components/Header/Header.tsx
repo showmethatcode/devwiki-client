@@ -3,15 +3,16 @@ import Link from 'next/link'
 import ArrowIcon from './ArrowIcon'
 
 const rootStyle = css`
-  height: 66px;
-  border: 1px solid #f4f4f4;
+  margin: 0 auto;
+  width: 1440px;
 `
 
 const toolbarStyle = css`
   padding: 0px;
   display: flex;
-  justify-content: space-around;
-  margin: 20px 0 20px 0;
+  justify-content: space-between;
+  width: 952px;
+  margin: 20px auto;
 `
 
 const titleWrapperStyle = css`

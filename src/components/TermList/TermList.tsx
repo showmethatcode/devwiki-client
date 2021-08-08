@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
 import { Term } from 'screen/MainScreen'
 import { css } from '@emotion/react'
+import Link from 'next/link'
 
 const listItemStyle = css`
   margin: 10px;
@@ -15,16 +15,18 @@ interface TermListProps {
   heading: string
 }
 
-const TermList: FC<TermListProps> = (props) => {
+const TermList = (props: TermListProps) => {
   const { terms, heading } = props
   return (
     <div {...props}>
       <h2>{heading}</h2>
-      {terms.map((term, idx) => (
-        <li css={listItemStyle} key={idx}>
-          <a href={`/terms/${term.id}`}>{term.title}</a>
-        </li>
-      ))}
+      <ul>
+        {terms.map((term, idx) => (
+          <li key={idx} css={listItemStyle}>
+            <Link href={`/terms/${term.id}`}>{term.title}</Link>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
