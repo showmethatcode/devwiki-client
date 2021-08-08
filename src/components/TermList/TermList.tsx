@@ -1,12 +1,13 @@
 import { Term } from 'screen/MainScreen'
 import { css } from '@emotion/react'
 import Link from 'next/link'
+import colors from 'styles/colors'
 
 const listItemStyle = css`
   margin: 10px;
-  color: #3d73ff;
+  color: ${colors.blue};
   a {
-    color: #3d73ff;
+    color: ${colors.blue};
   }
 `
 

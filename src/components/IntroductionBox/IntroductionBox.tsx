@@ -1,5 +1,6 @@
 import { css } from '@emotion/react'
 import { GITHUB_ORGANIZATION_URL } from 'constants/common'
+import colors from 'styles/colors'
 
 const rootStyle = css`
   background-color: #fafafa;
@@ -27,7 +28,7 @@ const articleStyle = css`
   }
 
   a {
-    color: #3d73ff;
+    color: ${colors.blue};
   }
 `
 
