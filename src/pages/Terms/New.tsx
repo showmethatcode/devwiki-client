@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import TermScreen from 'screen/TermScreen'
-import InputTitle from 'components/Terms/InputTitle'
+// import InputTitle from 'components/terms/InputTitle'
 
 const New: FC = () => {
   return (

@@ -1,20 +1,21 @@
 import React, { FC } from 'react'
-import TermRelated from 'components/Terms/TermRelated'
+import TermRelated from 'components/Terms/New/TermRelated'
 import { css } from '@emotion/react'
-import InputTitle from 'components/Terms/InputTitle'
-// import { ControlledUsage } from 'components/Terms/ControlledUsage'
+// import InputTitle from 'components/terms/InputTitle'
 
 const termScreenStyle = css`
-  padding: 0 21%;
+  width: 718px;
+  margin: 0 auto;
 `
 
 const TermScreen: FC = () => {
   return (
-    <div css={termScreenStyle}>
-      {/* <InputTitle /> */}
-      {/* <ControlledUsage /> */}
-      <TermRelated />
-    </div>
+    <>
+      <div css={termScreenStyle}>
+        {/* <InputTitle /> */}
+        <TermRelated />
+      </div>
+    </>
   )
 }
 
