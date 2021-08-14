@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     container: pandoc/latex
     steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+          run: echo "$GITHUB_CONTEXT"
       - uses: actions/checkout@v2
       - name: Install mustache (to update the date)
         run:  apk add ruby && gem install mustache
