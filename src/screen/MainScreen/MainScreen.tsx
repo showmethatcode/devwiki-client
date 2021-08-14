@@ -10,7 +10,7 @@ const termListWrapperStyle = css`
   justify-content: flex-start;
 `
 
-const TermsWrapperStyle = css`
+const termsWrapperStyle = css`
   flex: 1;
 `
 
@@ -58,12 +58,12 @@ const MainScreen = () => {
         </EmojiContentBox>
         <div css={termListWrapperStyle}>
           <TermList
-            css={TermsWrapperStyle}
+            css={termsWrapperStyle}
             terms={latestTerms}
             heading="🌿 최근에 추가된 용어"
           />
           <TermList
-            css={TermsWrapperStyle}
+            css={termsWrapperStyle}
             terms={popularTerms}
             heading="👀 사람들이 가장 많이 본 용어 "
           />
