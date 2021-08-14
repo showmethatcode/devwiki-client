@@ -29,37 +29,15 @@ const articleStyle = css`
   }
 `
 
-enum EmojiTypes {
-  dog = '🐶',
-  cat = '😺',
-  devil = '😈',
-  robbot = '🤖',
-  ghost = '👻',
-  eyes = '👀',
-  bad = '💩',
-  good = '👍',
-  lol = '🙌',
-  thanks = '🙏',
-  whale = '🐳',
-  monkey = '🐵',
-  fox = '🦊',
-  bear = '🐻',
-  chick = '🐥',
-  car = '🚙',
-  rocket = '🚀',
-  party = '🎉',
-  letter = '📮',
-}
-
 interface EmojiContentBoxProps {
-  emoji: keyof typeof EmojiTypes
+  emoji: string
 }
 
 const EmojiContentBox: FC<EmojiContentBoxProps> = ({ emoji, children }) => {
   return (
     <section css={rootStyle}>
       <header>
-        <p css={headerContentStyle}>{EmojiTypes[emoji]}</p>
+        <p css={headerContentStyle}>{emoji}</p>
       </header>
       <article css={articleStyle}>{children}</article>
     </section>

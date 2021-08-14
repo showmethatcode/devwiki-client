@@ -10,8 +10,8 @@ const termListWrapperStyle = css`
   justify-content: flex-start;
 `
 
-const latestTermsWrapperStyle = css`
-  margin: 0 25% 0 0;
+const TermsWrapperStyle = css`
+  flex: 1;
 `
 
 const rootStyle = css`
@@ -45,7 +45,7 @@ const MainScreen = () => {
   return (
     <>
       <div css={rootStyle}>
-        <EmojiContentBox emoji="dog">
+        <EmojiContentBox emoji="🐶">
           <p>
             개발용어사전은 누구나 용어를 추가하고 수정할 수 있는 대중 참여형
             사전이에요.
@@ -58,11 +58,12 @@ const MainScreen = () => {
         </EmojiContentBox>
         <div css={termListWrapperStyle}>
           <TermList
-            css={latestTermsWrapperStyle}
+            css={TermsWrapperStyle}
             terms={latestTerms}
             heading="🌿 최근에 추가된 용어"
           />
           <TermList
+            css={TermsWrapperStyle}
             terms={popularTerms}
             heading="👀 사람들이 가장 많이 본 용어 "
           />

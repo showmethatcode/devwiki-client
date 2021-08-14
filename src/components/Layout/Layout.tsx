@@ -2,7 +2,8 @@ import Header from 'components/Header'
 import { css } from '@emotion/react'
 
 const containerStyle = css`
-  margin: 0 244px 0 244px;
+  width: 1440px;
+  margin: 0 auto;
 `
 
 const horizonStyle = css`
