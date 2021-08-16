@@ -7,8 +7,17 @@ const modules = fs.readdirSync(path.join(__dirname, 'src')).map((value) => {
 module.exports = {
   presets: [
     ['@babel/preset-env', { targets: { node: 'current' } }],
+    '@emotion/babel-preset-css-prop',
     '@babel/typescript',
-    'next/babel',
+    [
+      'next/babel',
+      {
+        'preset-react': {
+          runtime: 'automatic',
+          importSource: '@emotion/react',
+        },
+      },
+    ],
   ],
   plugins: [
     [
