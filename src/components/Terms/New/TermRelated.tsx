@@ -3,6 +3,7 @@ import useSWR from 'swr'
 import Markdown from '../Markdown/MarkdownEditor'
 import '@toast-ui/editor/dist/toastui-editor.css'
 import axios from 'axios'
+import getDataFromLocalStorage from 'utils/getDataFromLocalStorage'
 import fetcher from 'utils/fetcher'
 import {
   relatedTermsStyle,
@@ -21,18 +22,19 @@ const TermRelated = () => {
     id: number
     text: string
   }
+
+  const token = getDataFromLocalStorage('token')
   const [relatedTerms, setRelatedTerms] = useState<ITerms[]>([])
   const [inputTerm, setInputTerm] = useState('')
   const [id, setId] = useState(1)
 
   const [isContentEmpty, setIsContentEmpty] = useState(true)
-  const [makeTermsError, setMakeTermsError] = useState('')
   const [markdownContent, setMarkdownContent] = useState('')
   const [titleInput, setTitleInput] = useState('')
   const [isTitleInputEmpty, setIsTitleInputEmpty] = useState(true)
 
   const onChangeInputTitle = useCallback(
-    (e) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       setTitleInput(e.target.value)
       e.target.value.length > 0
         ? setIsTitleInputEmpty(false)
@@ -70,9 +72,8 @@ const TermRelated = () => {
     if (
       (e.keyCode === 188 || e.keyCode === 13 || e.keyCode === 32) &&
       trimmedInputTerm
-    ) {
+    )
       onClick()
-    }
   }
   const onRemove = (id: number): void => {
     const termsArray = relatedTerms.filter(
@@ -91,42 +92,30 @@ const TermRelated = () => {
       </button>
     </li>
   ))
-  const onSubmit = useCallback((e) => {
-    e.preventDefault()
-    console.log('굿굿굿')
-  }, [])
-  // const onSubmit = useCallback(
-  //   (e: any, props) => {
-  //     if (!isContentEmpty && !isTitleInputEmpty) {
-  //       setMakeTermsError('')
-  //       axios
-  //         .post('http://localhost:3095/api/terms/new', {
-  //           titleInput,
-  //           markdownContent,
-  //           relatedTerms,
-  //         })
-  //         .then((response) => {
-  //           // 성공
-  //           console.log(response)
-  //         })
-  //         .catch((error) => {
-  //           console.log(error.response)
-  //           setMakeTermsError(error.response.data)
-  //         })
-  //     }
-  //   },
-  //   [titleInput, relatedTerms],
-  // )
-
-  // if (data) {
-  //   return {
-  //     redirect: {
-  //       destination: '/terms',
-  //       permanent: false,
-  //     },
-  //   }
-  // }
-  console.log(markdownContent)
+  const onClickSubmit = () => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/terms/`, {
+        term: {
+          name: titleInput,
+          description: markdownContent,
+          related: inputTerm,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        alert('등록되었습니다')
+        return {
+          redirect: {
+            destination: `terms/${titleInput}`,
+            permanent: false,
+          },
+        }
+      })
+      .catch((err) => console.error(err))
+  }
 
   return (
     <>
@@ -158,20 +147,18 @@ const TermRelated = () => {
             {relatedTermsList}
           </ul>
         </div>
-        <form onSubmit={onSubmit}>
-          <button
-            css={
-              !isTitleInputEmpty && !isContentEmpty
-                ? submitButtonStyle
-                : submitButtonNotReadyStyle
-            }
-            disabled={!isTitleInputEmpty && !isContentEmpty ? false : true}
-            id="submit"
-            type="submit"
-          >
-            <span>저장하기</span>
-          </button>
-        </form>
+        <button
+          css={
+            !isTitleInputEmpty && !isContentEmpty
+              ? submitButtonStyle
+              : submitButtonNotReadyStyle
+          }
+          disabled={!isTitleInputEmpty && !isContentEmpty ? false : true}
+          id="submit"
+          onClick={onClickSubmit}
+        >
+          <span>저장하기</span>
+        </button>
       </div>
     </>
   )
