@@ -24,11 +24,6 @@ interface Props extends EditorProps {
   setIsContentEmpty?: (isContentEmpty: boolean) => void
   setMarkdownContent?: (content: any) => void
 }
-// controlled -> 부모에서 상태 관리
-// uncontrolled -> 자체적으로 상태관리
-// 상태 자체를 부모가 갖고있고, 그 상태가 비었는지 아닌지를 통해 부모에서 판단
-// 마크다운 value의 상태를 부모가 관리하게끔 해야 한다.
-// 마크다운 에디터가 에디터로서의 기능만 가져서 재사용을 할 수 있게끔
 
 const Markdown: FC<Props> = (props, value) => {
   const {
@@ -53,7 +48,6 @@ const Markdown: FC<Props> = (props, value) => {
       valueType === 'markdown' ? instance.getHTML() : instance.getMarkdown(),
     )
   }, [props, editorRef])
-  // 제어컴포넌트, 비제어 컴포넌트 다시 보기
 
   return (
     <div>
