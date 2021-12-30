@@ -1,16 +1,23 @@
-import { FC } from 'react'
 import Header from 'components/Header'
+import { css } from '@emotion/react'
 
-const Layout: FC = ({ children }) => {
+const containerStyle = css`
+  width: 1440px;
+  margin: 0 auto;
+`
+
+const horizonStyle = css`
+  border: none;
+  height: 1px;
+  background-color: #f4f4f4;
+`
+
+const Layout = ({ children }) => {
   return (
     <>
-      <style jsx global>{`
-        body {
-          margin: 0;
-        }
-      `}</style>
       <Header />
-      <main>{children}</main>
+      <hr css={horizonStyle} />
+      <main css={containerStyle}>{children}</main>
     </>
   )
 }
