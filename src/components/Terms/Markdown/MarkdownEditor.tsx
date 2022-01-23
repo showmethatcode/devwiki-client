@@ -55,7 +55,7 @@ const Markdown: FC<Props> = (props, value) => {
         {...props}
         initialValue={initialValue}
         previewStyle={previewStyle ?? 'vertical'}
-        height={height || '550px'}
+        height={height ?? '550px'}
         initialEditType={initialEditType || 'markdown'}
         useCommandShortcut={useCommandShortcut || true}
         ref={editorRef}
