@@ -43,7 +43,7 @@ const Markdown: FC<Props> = (props, value) => {
     } else {
       props.setIsContentEmpty(false)
     }
-    const valueType = props.valueType || 'markdown'
+    const valueType = props.valueType ?? 'markdown'
     props.setMarkdownContent(
       valueType === 'markdown' ? instance.getHTML() : instance.getMarkdown(),
     )
