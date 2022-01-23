@@ -31,7 +31,7 @@ const TermRelated = () => {
   const [isContentEmpty, setIsContentEmpty] = useState(true)
   const [markdownContent, setMarkdownContent] = useState('')
   const [titleInput, setTitleInput] = useState('')
-  const [isTitleInputEmpty, setIsTitleInputEmpty] = useState(true)
+  const isTitleInputEmpty = titleInput.length === 0
 
   const onChangeInputTitle = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
