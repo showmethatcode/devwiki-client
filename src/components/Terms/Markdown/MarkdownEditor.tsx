@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import React, { useState, useCallback, useRef, FC, useEffect } from 'react'
+import React, { useCallback, useRef, FC } from 'react'
 import { Editor as EditorType, EditorProps } from '@toast-ui/react-editor'
 import { TuiEditorWithForwardedProps } from './TuiEditorWrapper'
 
@@ -11,6 +11,7 @@ const Editor = dynamic<TuiEditorWithForwardedProps>(
   () => import('./TuiEditorWrapper'),
   { ssr: false },
 )
+
 const EditorWithForwardedRef = React.forwardRef<
   EditorType | undefined,
   EditorPropsWithHandlers
@@ -21,8 +22,8 @@ const EditorWithForwardedRef = React.forwardRef<
 interface Props extends EditorProps {
   onChange?(value: string | boolean): void
   valueType?: 'markdown' | 'html'
-  setIsContentEmpty?: (isContentEmpty: boolean) => void
   setMarkdownContent?: (content: any) => void
+  isMarkdownContentEmpty?: boolean
 }
 
 const Markdown: FC<Props> = (props, value) => {
@@ -37,12 +38,6 @@ const Markdown: FC<Props> = (props, value) => {
   const editorRef = useRef<EditorType>()
   const handleChange = useCallback(() => {
     const instance = editorRef.current.getInstance()
-    if (instance.getMarkdown().length < 1) {
-      props.setIsContentEmpty(true)
-      return
-    } else {
-      props.setIsContentEmpty(false)
-    }
     const valueType = props.valueType ?? 'markdown'
     props.setMarkdownContent(
       valueType === 'markdown' ? instance.getHTML() : instance.getMarkdown(),
@@ -56,8 +51,8 @@ const Markdown: FC<Props> = (props, value) => {
         initialValue={initialValue}
         previewStyle={previewStyle ?? 'vertical'}
         height={height ?? '550px'}
-        initialEditType={initialEditType || 'markdown'}
-        useCommandShortcut={useCommandShortcut || true}
+        initialEditType={initialEditType ?? 'markdown'}
+        useCommandShortcut={useCommandShortcut ?? true}
         ref={editorRef}
         onChange={handleChange}
       />
