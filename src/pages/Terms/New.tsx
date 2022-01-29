@@ -1,8 +1,7 @@
-import React, { FC } from 'react'
+import React from 'react'
 import TermScreen from 'screen/TermScreen'
-// import InputTitle from 'components/terms/InputTitle'
 
-const New: FC = () => {
+const New = () => {
   return (
     <div>
       <TermScreen />
