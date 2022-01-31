@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import axios from 'axios'
 
-const DetailTerm = () => {
+const DetailTerm: React.FC = () => {
   const [users, setUsers] = useState(null)
   useEffect(() => {
     const fetchData = async () => {
