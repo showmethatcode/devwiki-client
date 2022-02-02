@@ -10,5 +10,3 @@ const New = () => {
 }
 
 export default New
-
-// localhost:3000/terms/new
