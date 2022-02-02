@@ -1,10 +1,13 @@
 import React, { useState, useCallback } from 'react'
 import { css } from '@emotion/react'
+import { useRouter } from 'next/dist/client/router'
 import getDataFromLocalStorage from 'utils/getDataFromLocalStorage'
 import RelatedTerms from 'components/Terms/New/RelatedTerms'
 import Markdown from 'components/Terms/Markdown/MarkdownEditor'
 import '@toast-ui/editor/dist/toastui-editor.css'
 import axios from 'axios'
+import { server, client } from 'constants/common'
+import { Terms } from 'typings/db'
 import {
   submitButtonStyle,
   submitButtonNotReadyStyle,
@@ -15,12 +18,9 @@ const termScreenStyle = css`
   width: 718px;
   margin: 0 auto;
 `
-interface Term {
-  id: number
-  text: string
-}
 
 const TermScreen = () => {
+  const router = useRouter()
   const token = getDataFromLocalStorage('token')
   const [titleInput, setTitleInput] = useState('')
   const isTitleInputEmpty = titleInput.length === 0
@@ -31,34 +31,32 @@ const TermScreen = () => {
     [titleInput],
   )
 
-  const [relatedTerms, setRelatedTerms] = useState<Term[]>([])
+  const [relatedTerms, setRelatedTerms] = useState<Terms[]>([])
   const isRelatedTermsEmpty = relatedTerms.length === 0
 
   const [markdownContent, setMarkdownContent] = useState('')
   const isMarkdownContentEmpty = markdownContent.length === 0
 
   const onClickSubmit = () => {
-    console.log(titleInput, markdownContent, relatedTerms)
     axios
-      .post('http://localhost:8000/terms/', {
-        term: {
+      .post(
+        `${server}/terms/`,
+        {
           name: titleInput,
           description: markdownContent,
           termRelatedNames: relatedTerms,
         },
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        alert('등록되었습니다')
-        return {
-          redirect: {
-            destination: `/`,
-            permanent: false,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
           },
-        }
+        },
+      )
+      .then((res) => {
+        console.log(res.data)
+        alert('등록되었습니다')
+        router.push(`${client}`)
       })
       .catch((err) => console.error(err))
   }
@@ -85,19 +83,9 @@ const TermScreen = () => {
         />
         <button
           css={
-            !isTitleInputEmpty &&
-            !isMarkdownContentEmpty &&
-            !isRelatedTermsEmpty
-              ? submitButtonStyle
-              : submitButtonNotReadyStyle
+            !isTitleInputEmpty ? submitButtonStyle : submitButtonNotReadyStyle
           }
-          disabled={
-            !isTitleInputEmpty &&
-            !isMarkdownContentEmpty &&
-            !isRelatedTermsEmpty
-              ? false
-              : true
-          }
+          disabled={!isTitleInputEmpty ? false : true}
           id="submit"
           onClick={onClickSubmit}
         >
