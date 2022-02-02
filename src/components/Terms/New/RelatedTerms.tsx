@@ -1,4 +1,5 @@
 import { FC, useState } from 'react'
+import { Terms, Props } from 'typings/db'
 import {
   textInputStyle,
   listContainerStyle,
@@ -7,21 +8,9 @@ import {
   buttonInRelatedTermsStyle,
 } from './styles'
 
-interface Term {
-  id: number
-  text: string
-}
-
-interface Props {
-  relatedTerms: Term[]
-  setRelatedTerms?: (content: Term[]) => void
-  isRelatedTermsEmpty?: boolean
-}
-
 const RelatedTerms: FC<Props> = (props) => {
   const [relatedTerms, setRelatedTerms] = useState([])
   const [inputTerm, setInputTerm] = useState('')
-  const [id, setId] = useState(1)
 
   const trimmedInputTerm = inputTerm.trim().replace(/[^ㄱ-힣a-zA-Z0-9+#]/gi, '')
 
@@ -33,8 +22,8 @@ const RelatedTerms: FC<Props> = (props) => {
   }
 
   const onClick = () => {
-    const check = relatedTerms.some((term) => {
-      return term.text === trimmedInputTerm
+    const check = relatedTerms.some((term: string) => {
+      return term === trimmedInputTerm
     })
     if (check) {
       setInputTerm('')
@@ -42,16 +31,11 @@ const RelatedTerms: FC<Props> = (props) => {
       console.log(relatedTerms)
       return
     }
-    const termsArray = relatedTerms.concat({
-      id: id,
-      text: trimmedInputTerm,
-    })
+    const termsArray = relatedTerms.concat(trimmedInputTerm)
     setRelatedTerms(termsArray)
     props.setRelatedTerms(termsArray)
-    setId(id + 1)
     setInputTerm('')
   }
-
   const onKeyUp = (e: React.KeyboardEvent<HTMLDivElement>): void => {
     if (
       (e.keyCode === 188 || e.keyCode === 13 || e.keyCode === 32) &&
@@ -59,9 +43,9 @@ const RelatedTerms: FC<Props> = (props) => {
     )
       onClick()
   }
-  const onRemove = (id: number): void => {
+  const onRemove = (idx: number): void => {
     const termsArray = relatedTerms.filter(
-      (relatedTerm: Term) => relatedTerm.id !== id,
+      (term: string) => relatedTerms.indexOf(term) !== idx,
     )
     setRelatedTerms(termsArray)
     props.setRelatedTerms(termsArray)
@@ -80,12 +64,12 @@ const RelatedTerms: FC<Props> = (props) => {
       />
       <div css={listContainerStyle} id="container2">
         <ul css={listTermsStyle} id="list_terms">
-          {relatedTerms.map((relatedTerm: Term) => (
-            <li css={relatedTermsStyle} key={relatedTerm.id}>
-              {relatedTerm.text}
+          {relatedTerms.map((relatedTerm: Terms, idx) => (
+            <li css={relatedTermsStyle} key={idx}>
+              {relatedTerm}
               <button
                 css={buttonInRelatedTermsStyle}
-                onClick={() => onRemove(relatedTerm.id)}
+                onClick={() => onRemove(idx)}
               >
                 X
               </button>
