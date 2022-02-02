@@ -1,4 +1,6 @@
 const getDataFromLocalStorage = (key: string) => {
-  return localStorage.getItem(key)
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem(key)
+  }
 }
 export default getDataFromLocalStorage
