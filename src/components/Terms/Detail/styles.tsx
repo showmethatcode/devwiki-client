@@ -10,12 +10,13 @@ export const inputTitleStyle = css`
   font-style: normal;
   font-weight: bold;
   font-size: 36px;
-  margin-top: 60px;
+  margin: 60px 0 20px 0;
 `
 export const titleBlockStyle = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 50px;
 `
 
 export const editButtonStyle = css`
@@ -29,8 +30,19 @@ export const editButtonStyle = css`
   padding: 18px 33px;
 `
 
+export const revisionButtonStyle = css`
+  margin: 22px 0 15px 0;
+  background-color: #f3f3f3;
+  border: none;
+  font-size: 18px;
+  color: #535353;
+  border-radius: 10px;
+  padding: 18px 33px;
+`
+
 export const listTermsStyle = css`
-  width: 100%;
+  height: 40px;
+  display: block;
   padding: 0;
 `
 
@@ -44,4 +56,10 @@ export const relatedTermsStyle = css`
   color: white;
   background-color: #7d68ff;
   list-style: none;
+`
+
+export const descriptionStyle = css`
+  font-family: Pretendard;
+  color: #6d6d6d;
+  font-size: 14px;
 `
