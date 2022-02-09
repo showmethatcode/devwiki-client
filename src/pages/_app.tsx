@@ -1,6 +1,9 @@
 import type { AppProps } from 'next/app'
 import Layout from 'components/Layout'
 import { css, Global } from '@emotion/react'
+import { useState } from 'react'
+import { QueryClient, QueryClientProvider, Hydrate } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 const globalStyle = css`
   html,
@@ -21,13 +24,18 @@ const globalStyle = css`
 
 function MyApp(props: AppProps) {
   const { Component, pageProps } = props
+  const [queryClient] = useState(() => new QueryClient())
+
   return (
-    <>
-      <Global styles={globalStyle} />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <Global styles={globalStyle} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </Hydrate>
+    </QueryClientProvider>
   )
 }
 
