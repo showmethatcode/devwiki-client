@@ -12,6 +12,21 @@ export const inputTitleStyle = css`
   margin-bottom: 28px;
 `
 
+export const inputTitleInEditModeStyle = css`
+  font-family: Pretendard;
+  font-style: normal;
+  background-color: #fcfcfc;
+  border: 1px solid #efefef;
+  padding: 0 16px;
+  font-size: 14px;
+  width: 96%;
+  height: 52px;
+  margin-bottom: 28px;
+  &:focus {
+    outline: none;
+  }
+`
+
 export const listContainerStyle = css`
   width: 100%;
   overflow-x: scroll;
