@@ -34,7 +34,7 @@ const TermScreen = () => {
   const [relatedTerms, setRelatedTerms] = useState<Terms[]>([])
   const isRelatedTermsEmpty = relatedTerms.length === 0
 
-  const [markdownContent, setMarkdownContent] = useState('')
+  const [markdownContent, setMarkdownContent] = useState([])
   const isMarkdownContentEmpty = markdownContent.length === 0
 
   const onClickSubmit = () => {
@@ -73,6 +73,7 @@ const TermScreen = () => {
           id="title_input"
         />
         <Markdown
+          initialValue=""
           setMarkdownContent={setMarkdownContent}
           isMarkdownContentEmpty={isMarkdownContentEmpty}
         />

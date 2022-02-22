@@ -23,6 +23,7 @@ interface Props extends EditorProps {
   valueType?: 'markdown' | 'html'
   setMarkdownContent?: (content: any) => void
   isMarkdownContentEmpty?: boolean
+  initialValue: string
 }
 
 const Markdown: FC<Props> = (props, value) => {
