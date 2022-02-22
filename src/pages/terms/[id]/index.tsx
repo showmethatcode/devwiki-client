@@ -8,22 +8,45 @@ import {
   descriptionStyle,
   revisionButtonStyle,
 } from 'components/Terms/Detail/styles'
-import { DetailTermProps } from 'typings/db'
-import {
-  GetServerSideProps,
-  GetStaticProps,
-  GetStaticPropsContext,
-  GetStaticPathsContext,
-  GetStaticPaths,
-} from 'next'
+import { DetailTermProps, RelatedTerm } from 'typings/db'
 import { QueryClient, dehydrate, useQuery } from 'react-query'
 import { getTerms } from 'apis/getTerms'
 import DateParse from 'utils/DateParse'
+import { GetStaticProps, GetStaticPropsContext } from 'next'
+import axios from 'axios'
+import { server, client } from 'constants/common'
+import { useRouter } from 'next/router'
 
 const DetailTerm = ({ id }: DetailTermProps) => {
-  const { data, isLoading, isError, error } = useQuery('terms', () =>
+  const router = useRouter()
+  const { data, isLoading, isError, error } = useQuery(['terms', id], () =>
     getTerms(id),
   )
+  const editTerms = () => {
+    const termRelatedNames = data.data.term.termsRelated.map(
+      (term) => term.name,
+    )
+    axios
+      .put(`${server}/terms/${id}`, {
+        description: data.data.term.description,
+        termRelatedNames: termRelatedNames,
+      })
+      .then((res) => {
+        console.log('good')
+        router.push({
+          pathname: `${client}/terms/${id}/edit`,
+          query: {
+            id: data.data.term.id,
+            name: data.data.term.name,
+            description: data.data.term.description,
+            termsRelated: data.data.term.termsRelated,
+          },
+        })
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }
 
   if (isLoading || !data) {
     return <div>Loading...</div>
@@ -34,7 +57,7 @@ const DetailTerm = ({ id }: DetailTermProps) => {
     <div css={wikiScreenStyle}>
       <div css={titleBlockStyle}>
         <h1 css={inputTitleStyle}>{data.data.term.name}</h1>
-        <button css={editButtonStyle}>
+        <button css={editButtonStyle} onClick={editTerms}>
           <span>📝 내용 개선하기</span>
         </button>
       </div>
@@ -42,18 +65,23 @@ const DetailTerm = ({ id }: DetailTermProps) => {
         dangerouslySetInnerHTML={{ __html: data.data.term.description }}
       ></div>
       <ul css={listTermsStyle}>
-        <li css={relatedTermsStyle}>Frontend</li>
-        <li css={relatedTermsStyle}>JavaScript</li>
-      </ul>
-      {/* <ul css={listTermsStyle}>
-        {data.data.term.termRelatedNames.map((relatedTerm: RelatedTerm) => (
-          <li css={relatedTermsStyle} key={relatedTerm.id}>
+        {data.data.term.termsRelated.map((relatedTerm: RelatedTerm) => (
+          <li
+            css={relatedTermsStyle}
+            onClick={() => router.push(`${client}/terms/${relatedTerm.id}`)}
+            key={relatedTerm.id}
+          >
             {relatedTerm.name}
           </li>
+          // <Link href={`${client}/terms/${relatedTerm.id}`} key={relatedTerm.id}>
+          //   <a>
+          //     <li css={relatedTermsStyle}>{relatedTerm.name}</li>
+          //   </a>
+          // </Link>
         ))}
-      </ul> */}
+      </ul>
       <div>{DateParse(data.data.term.createdAt).date}</div>
-      <button css={revisionButtonStyle}>
+      <button css={revisionButtonStyle} onClick={editTerms}>
         <span>✨ 수정 기록 보기</span>
       </button>
       <div css={descriptionStyle}>
@@ -63,7 +91,7 @@ const DetailTerm = ({ id }: DetailTermProps) => {
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths = async () => {
   return {
     paths: [],
     fallback: 'blocking',
@@ -72,21 +100,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   try {
-    if (context?.params?.number) {
+    if (context?.params?.id) {
       const id = Number(context.params.id)
       const queryClient = new QueryClient()
-      await queryClient.prefetchQuery('terms', () => getTerms(id), {
-        staleTime: 1000,
-      })
-      if (!JSON.parse(JSON.stringify(dehydrate(queryClient)))) {
+      await queryClient.prefetchQuery('terms', () => getTerms(id))
+
+      if (queryClient.getQueryCache().find('terms') == null) {
         return {
           notFound: true,
         }
       }
       return {
         props: {
-          dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
-          id: context.params.number,
+          dehydratedState: dehydrate(queryClient).toString(),
+          id: context.params.id,
         },
       }
     }
