@@ -11,9 +11,9 @@ const dateParse = (dateInfo: string) => {
   }
 
   if (parseInt(dateInfo.slice(8, 10)) < 10) {
-    day = dateInfo.slice(6, 7)
+    day = dateInfo.slice(9, 10)
   } else {
-    day = dateInfo.slice(5, 7)
+    day = dateInfo.slice(8, 10)
   }
 
   const date = dateInfo.slice(0, 4) + '. ' + month + '. ' + day
