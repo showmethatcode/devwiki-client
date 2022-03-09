@@ -70,7 +70,7 @@ const DetailTerm = ({ id }: DetailTermProps) => {
         ))}
       </ul>
       <div>{DateParse(data.data.term.createdAt).date}</div>
-      <button css={revisionButtonStyle} onClick={editTerms}>
+      <button css={revisionButtonStyle}>
         <span>✨ 수정 기록 보기</span>
       </button>
       <div css={descriptionStyle}>
