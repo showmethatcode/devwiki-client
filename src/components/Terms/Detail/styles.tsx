@@ -56,6 +56,7 @@ export const relatedTermsStyle = css`
   color: white;
   background-color: #7d68ff;
   list-style: none;
+  cursor: pointer;
 `
 
 export const descriptionStyle = css`
