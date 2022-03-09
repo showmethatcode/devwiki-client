@@ -48,13 +48,11 @@ const EditScreen = ({ id }: DetailTermProps) => {
         },
       )
       .then((res) => {
-        console.log(res.data)
         alert('수정되었습니다')
         router.push(`${client}/terms/${id}`)
       })
       .catch((err) => {
         console.error(err)
-        console.log('실패')
       })
   }
 

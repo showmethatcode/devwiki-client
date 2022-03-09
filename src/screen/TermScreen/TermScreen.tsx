@@ -54,7 +54,6 @@ const TermScreen = () => {
         },
       )
       .then((res) => {
-        console.log(res.data)
         alert('등록되었습니다')
         router.push(`${client}`)
       })
