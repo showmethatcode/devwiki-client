@@ -12,7 +12,7 @@ import { DetailTermProps, RelatedTerm } from 'typings/db'
 import { QueryClient, dehydrate, useQuery } from 'react-query'
 import { getTerms } from 'apis/getTerms'
 import DateParse from 'utils/DateParse'
-import { GetStaticProps, GetStaticPropsContext } from 'next'
+import { GetStaticPropsContext } from 'next'
 import axios from 'axios'
 import { server, client } from 'constants/common'
 import { useRouter } from 'next/router'
@@ -24,23 +24,17 @@ const DetailTerm = ({ id }: DetailTermProps) => {
   )
   const editTerms = () => {
     const termRelatedNames = data.data.term.termsRelated.map(
-      (term) => term.name,
+      (term: RelatedTerm) => term.name,
     )
+
     axios
       .put(`${server}/terms/${id}`, {
         description: data.data.term.description,
         termRelatedNames: termRelatedNames,
       })
       .then((res) => {
-        console.log('good')
         router.push({
           pathname: `${client}/terms/${id}/edit`,
-          query: {
-            id: data.data.term.id,
-            name: data.data.term.name,
-            description: data.data.term.description,
-            termsRelated: data.data.term.termsRelated,
-          },
         })
       })
       .catch((err) => {
@@ -73,11 +67,6 @@ const DetailTerm = ({ id }: DetailTermProps) => {
           >
             {relatedTerm.name}
           </li>
-          // <Link href={`${client}/terms/${relatedTerm.id}`} key={relatedTerm.id}>
-          //   <a>
-          //     <li css={relatedTermsStyle}>{relatedTerm.name}</li>
-          //   </a>
-          // </Link>
         ))}
       </ul>
       <div>{DateParse(data.data.term.createdAt).date}</div>
@@ -127,34 +116,5 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     },
   }
 }
-
-// localhost:8000/terms/1
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   try {
-//     if (context?.params?.id) {
-//       const id = Number(context.params.id)
-//       const queryClient = new QueryClient()
-
-//       await queryClient.prefetchQuery('terms', () => getTerms(id), {
-//         staleTime: 1000,
-//       })
-
-//       return {
-//         props: {
-//           dehydratedState: dehydrate(queryClient).toString() || undefined,
-//           id: context.params.id || undefined,
-//         },
-//       }
-//     }
-//   } catch (error) {
-//     console.error('Error', error)
-//   }
-
-//   return {
-//     props: {
-//       id: context.params.id,
-//     },
-//   }
-// }
 
 export default DetailTerm
