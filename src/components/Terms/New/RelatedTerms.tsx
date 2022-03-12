@@ -9,7 +9,7 @@ import {
 } from './styles'
 
 const RelatedTerms: FC<Props> = (props) => {
-  const [relatedTerms, setRelatedTerms] = useState(props.relatedTerms || [])
+  const [relatedTerms, setRelatedTerms] = useState(props.relatedTerms || Object)
   const [inputTerm, setInputTerm] = useState('')
 
   const trimmedInputTerm = inputTerm.trim().replace(/[^ㄱ-힣a-zA-Z0-9+#]/gi, '')
@@ -30,7 +30,7 @@ const RelatedTerms: FC<Props> = (props) => {
       alert('중복')
       return
     }
-    const termsArray = relatedTerms.concat(trimmedInputTerm)
+    const termsArray: Terms[] = relatedTerms.concat(trimmedInputTerm)
     setRelatedTerms(termsArray)
     props.setRelatedTerms(termsArray)
     setInputTerm('')
